@@ -1,0 +1,6 @@
+playground\messaging\controller\MessagingController.class
+playground\messaging\DataSeeder.class
+playground\messaging\controller\MessagesResponse.class
+playground\messaging\Message.class
+playground\messaging\MessagingServiceApplication.class
+playground\messaging\MessagesRepository.class

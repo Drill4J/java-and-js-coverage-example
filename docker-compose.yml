@@ -21,6 +21,10 @@ services:
       - db
     networks:
       - app-network
+    volumes:
+      - ./drillagent:/data
+    environment:
+      - JAVA_TOOL_OPTIONS="-agentpath:/data/libdrill_agent.so=drillInstallationDir=/data,adminAddress=host.docker.internal:9090,agentId=messagingServiceAgent,groupId=test,buildVersion=0.1.0,logLevel=TRACE"
 
   notifications-service:
     restart: always
@@ -35,7 +39,7 @@ services:
     networks:
       - app-network
 
-  nginx:
+  frontend:
     restart: always
     build:
       context: .
@@ -47,6 +51,10 @@ services:
     depends_on:
       - messaging-service
       - notifications-service
+    environment:
+      JS_AGENT_HOST: ${JS_AGENT_HOST}
+      JS_AST_PARSER_VERSION: ${JS_AST_PARSER_VERSION}
+      BUILD_VERSION: ${FE_BUILD_VERSION}
     networks:
       - app-network
 

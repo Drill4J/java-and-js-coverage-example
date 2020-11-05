@@ -1,0 +1,4 @@
+*
+!frontend/frontend-app
+!nginx.conf
+frontend/frontend-app/node_modules

@@ -1,49 +1,45 @@
-# Playground - Docker, SpringBoot, and Angular 5
-This playground repository is intended to build an application in Angular which
-consumes multiple backend microservices developed in SpringBoot.
-The idea is to initially configure a test environment based on a single-host
-with multiple docker containers hosting the different services. A web-server
-(NGINX) that acts as the entry-point of the application hosting the built
-Angular application and configured to proxy the API traffic to the corresponding
-backend service hosted on its own docker container.
+# Сбор покрытия с Java + JS агентов в сервис-группе
 
-![Single Host Diagram](https://github.com/ahmedabadawi/playground-docker-spring-angular/blob/master/docs/single-host.png)
+## Подготовка
 
+1. Запустить сервисы Drill4J
 
-## Build Steps
-1. Clone repository
-```bash
-git clone https://github.com/ahmedabadawi/playground-docker-spring-angular.git
-cd playground-docker-spring-angular
-```
-2. Build Angular application
-```bash
-cd frontend/frontend-app
-ng build
-```
-3. Build backend services
-```bash
-cd ../../backend
-cd messaging-service
-mvn clean package
-cd ../notifications-service
-mvn clean package
-```
-4. Build and run docker compose
-```bash
-cd ../../
-docker-compose build
-docker-compose up
-```
-5. Open browser on http://localhost
+    ```shell
+      docker-compose -f services-drill-docker-compose.yml up -d
+    ```
 
-## Prerequisites
-- Docker CE >= version 18
-- Docker Compose >= version 1.20
-- Maven 3.x.x
-- JDK 1.8+
+2. Открыть [панель Drill4J](http://localhost:9091) и убедиться, что она доступна
 
-## Disclaimer
-My playground repositories are not intended to provide complete applications,
-basically they are sandboxes and pet projects to try different technologies and
-techniques.
+3. Запустить сервисы приложения.
+
+    ```shell
+      docker-compose up -d
+    ```
+
+4. Вернуться в [панель Drill4J](http://localhost:9091). Развернуть сервис-группу `test`. Дождаться появления **двух** агентов (`messagingServiceAgent` и `angular-playground-agent`)
+
+5. Зарегистрировать агента `messagingServiceAgent`.
+      В packages ввести
+
+      ```shell
+        playground/messaging
+        playground/messaging/controller
+      ```
+
+6. Зарегистрировать агента `angular-playground-agent`
+
+7. Установить [extension](https://github.com/Drill4J/browser-extension/tags) не ниже версии v.0.3.20
+
+8. Открыть приложение на [http://localhost](http://localhost) и запустить виджет
+
+## Чтобы собрать coverage
+
+1. Запустить тест
+
+2. Обновить страницу
+
+3. Завершить тест
+
+4. Должно собраться покрытие для обоих агентов (`messagingServiceAgent` и `angular-playground-agent`)
+
+For build instructions see the [original repo](https://github.com/ahmedabadawi/playground-docker-spring-angular.git)

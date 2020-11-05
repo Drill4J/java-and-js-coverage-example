@@ -1,0 +1,55 @@
+version: '3'
+services:
+  db:
+    build:
+      context: .
+      dockerfile: mongo.dockerfile
+    expose:
+      - "27017"
+    networks:
+      - app-network
+
+  messaging-service:
+    restart: always
+    container_name: messaging-service
+    build:
+      context: ./backend/messaging-service
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  notifications-service:
+    restart: always
+    container_name: notifications-service
+    build:
+      context: ./backend/notifications-service
+      dockerfile: Dockerfile
+    expose:
+      - "8080"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  nginx:
+    restart: always
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    depends_on:
+      - messaging-service
+      - notifications-service
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

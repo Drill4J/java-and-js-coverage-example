@@ -1,0 +1,35 @@
+{
+  "sources": {
+    "pattern": [
+      "src/**/*.ts"
+    ],
+    "ignore": [
+      "src/**/*.spec.ts",
+      "src/polyfills.ts",
+      "src/test.ts",
+      "src/**/*d.ts"
+    ]
+  },
+  "bundle": {
+    "pattern": "dist/**/*.js",
+    "ignore": [
+      "**/dist/**/*.map",
+      "**/dist/**/polyfills.bundle.js",
+      "**/dist/**/styles.bundle.js",
+      "**/dist/**/vendor.bundle.js"
+    ]
+  },
+  "sourcemaps": {
+    "pattern": [
+      "dist/**/*.js.map"
+    ],
+    "ignore": [
+      "src/polyfills.js.map"
+    ]
+  },
+  "output": {
+    "agentId": "angular-playground-agent",
+    "agentApiUrl": "http://jsagent:9404",
+    "groupId": "test"
+  }
+}

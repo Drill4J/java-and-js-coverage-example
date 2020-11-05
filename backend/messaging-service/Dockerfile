@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-slim
 VOLUME /tmp
 ARG JAR_FILE=messaging-service-0.0.1-SNAPSHOT.jar
 COPY ./target/${JAR_FILE} app.jar
